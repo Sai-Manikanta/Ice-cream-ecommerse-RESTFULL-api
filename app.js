@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 const app = express();
 
 // MongoDB connection
-mongoose.connect('mongodb://localhost/ice_creams_ecomerse', {
+mongoose.connect('mongodb://localhost/ice_creams_ecomerse',{
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useFindAndModify: false,
@@ -17,6 +17,9 @@ mongoose.connect('mongodb://localhost/ice_creams_ecomerse', {
 
 // api routes
 const iceCreamsRoutes = require('./routes/iceCreams');
+
+// Middlewares
+app.use(express.json());
 
 app.use('/api/ice-creams',iceCreamsRoutes);
 

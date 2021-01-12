@@ -1,19 +1,40 @@
 const router = require('express').Router();
+const IceCreame = require('../models/iceCreams');
 
-router.get('/', (req, res) => {
-    res.send('Ice creams Get')
+router.get('/', async (req, res) => {
+    const iceCreames = await IceCreame.find();
+    res.send(iceCreames);
 })
 
-router.post('/', (req, res) => {
-    res.send('Ice creams Post')
+router.get('/:id', async (req, res) => {
+    const iceCreames = await IceCreame.findById(req.params.id);
+    res.send(iceCreames);
 })
 
-router.delete('/:id', (req, res) => {
-    res.send(`Delete ice creams ${req.params.id}`)
+router.post('/', async (req, res) => {
+    let iceCreame = new IceCreame(req.body);
+    iceCreame = await iceCreame.save();
+    res.send(iceCreame);
 })
 
-router.put('/:id', (req, res) => {
-    res.send(`Update ice creams ${req.params.id}`)
+router.delete('/:id', async (req, res) => {
+    const iceCreame = await IceCreame.findByIdAndDelete(req.params.id);
+    res.send(iceCreame);
+})
+
+router.put('/:id', async (req, res) => {
+    const iceCreame = await IceCreame.findByIdAndUpdate(req.params.id, { ...req.body }, { new: true });
+    res.send(iceCreame);
 })
 
 module.exports = router;
+
+// {
+//     name: req.body.name,
+//     flavor: req.body.flavor,
+//     color: req.body.color,
+//     ingredients: req.body.ingredients,
+//     images: req.body.images,
+//     price: req.body.price,
+//     rating: req.body.rating, 
+// }
